@@ -21,21 +21,23 @@ namespace PaymentBatchImporter.Builder.Director
                     var lineValues = line.Split('^');
                     var currentLineType = lineValues[0];
 
-                    if(currentLineType == "B")
+                    switch(currentLineType)
                     {
-                        batchBuilder.AddHeader(lineValues);
-                    }
-                    else if(currentLineType == "H")
-                    {
-                        paymentRequest = batchBuilder.CreatePaymentRequest();
-                        paymentRequest.AddHeader(lineValues);
-                        batchBuilder.AddPaymentRequest(paymentRequest);
-                    }
-                    else if(currentLineType == "L")
-                    {
-                        InvoiceLine invoiceLine = batchBuilder.CreateInvoiceLine();
-                        invoiceLine.AddValues(lineValues);
-                        paymentRequest.AddInvoiceLine(invoiceLine);
+                        case "B":
+                            batchBuilder.AddHeader(lineValues);
+                            break;
+                        case "H":
+                            paymentRequest = batchBuilder.CreatePaymentRequest();
+                            paymentRequest.AddHeader(lineValues);
+                            batchBuilder.AddPaymentRequest(paymentRequest);
+                            break;
+                        case "L":
+                            InvoiceLine invoiceLine = batchBuilder.CreateInvoiceLine();
+                            invoiceLine.AddValues(lineValues);
+                            paymentRequest.AddInvoiceLine(invoiceLine);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
