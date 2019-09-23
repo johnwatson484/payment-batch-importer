@@ -1,2 +1,2 @@
-# payment-batch-importer
+# Payment Batch Importer
 Imports payment files
